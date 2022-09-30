@@ -14,3 +14,15 @@ class UserSerializer(serializers.ModelSerializer):
             return user
 
 
+class SegmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Segment
+        fields = ["id", "segment_name"]
+
+
+class BrandSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Brand
+        fields = ["id", "brand_name"]
+
+
