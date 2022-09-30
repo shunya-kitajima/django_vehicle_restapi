@@ -26,3 +26,13 @@ class BrandSerializer(serializers.ModelSerializer):
         fields = ["id", "brand_name"]
 
 
+class VehicleSerializer(serializers.ModelSerializer):
+    segment_name = serializers.ReadOnlyField(source="segment.segment_name", read_only=True)
+    brand_name = serializers.ReadOnlyField(source="brand.brand_name", read_only=True)
+
+    class Meta:
+        model = Vehicle
+        fields = ["id", "vehicle_name", "release_year", "price", "segment", "brand", "segment_name", "brand_name"]
+        extra_kwargs = {"user": {"read_only": True}}
+
+
