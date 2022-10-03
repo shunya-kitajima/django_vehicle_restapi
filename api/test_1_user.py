@@ -119,3 +119,8 @@ class UnAuthorizedUserApiTest(TestCase):
         res = self.client.post(TOKEN_URL, payload)
         self.assertNotIn("token", res.data)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_1_12_should_not_get_user_profile_when_unauthorized(self):
+        res = self.client.get(PROFILE_URL)
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
