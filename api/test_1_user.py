@@ -72,3 +72,13 @@ class UnAuthorizedUserApiTest(TestCase):
         }
         res = self.client.post(CREATE_USER_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_1_7_should_response_token(self):
+        payload = {
+            "username": "dummy",
+            "password": "dummy_pw",
+        }
+        get_user_model().objects.create_user(**payload)
+        res = self.client.post(TOKEN_URL, payload)
+        res.assertIn("token", res.data)
+        res.assertEqual(res.status_code, status.HTTP_200_OK)
