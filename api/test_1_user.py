@@ -31,3 +31,12 @@ class AuthorizedUserApiTests(TestCase):
         res = self.client.put(PROFILE_URL, payload)
 
         self.assertEqual(res.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_1_3_should_not_allowed_by_PATCH(self):
+        payload = {
+            "username": "dummy_",
+            "password": "dummy_pw_",
+        }
+        res = self.client.patch(PROFILE_URL, payload)
+
+        self.assertEqual(res.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
