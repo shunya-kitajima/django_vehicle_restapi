@@ -80,5 +80,5 @@ class UnAuthorizedUserApiTest(TestCase):
         }
         get_user_model().objects.create_user(**payload)
         res = self.client.post(TOKEN_URL, payload)
-        res.assertIn("token", res.data)
-        res.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertIn("token", res.data)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
