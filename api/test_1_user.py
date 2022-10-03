@@ -55,3 +55,13 @@ class UnAuthorizedUserApiTest(TestCase):
             user.check_password(payload["password"])
         )
         self.assertNotIn("password", res.data)
+
+    def test_1_5_should_not_create_user_by_same_credentials(self):
+        payload = {
+            "username": "dummy",
+            "password": "dummy_pw",
+        }
+        get_user_model().objects.create_user(**payload)
+        res = self.client.post(CREATE_USER_URL, payload)
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
