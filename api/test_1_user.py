@@ -37,3 +37,21 @@ class AuthorizedUserApiTests(TestCase):
         }
         res = self.client.patch(PROFILE_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
+class UnAuthorizedUserApiTest(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+
+    def test_1_4_should_create_new_user(self):
+        payload = {
+            "username": "dummy",
+            "password": "dummy_pw",
+        }
+        res = self.client.post(CREATE_USER_URL, payload)
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        user = get_user_model().objects.get(**res.data)
+        self.assertTrue(
+            user.check_password(payload["password"])
+        )
+        self.assertNotIn("password", res.data)
