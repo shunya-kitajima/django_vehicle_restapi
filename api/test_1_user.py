@@ -101,3 +101,12 @@ class UnAuthorizedUserApiTest(TestCase):
         res = self.client.post(TOKEN_URL, payload)
         self.assertNotIn("token", res.data)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_1_10_should_not_response_token_with_missing_field(self):
+        payload = {
+            "username": "",
+            "password": "dummy_pw",
+        }
+        res = self.client.post(TOKEN_URL, payload)
+        self.assertNotIn("token", res.data)
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
