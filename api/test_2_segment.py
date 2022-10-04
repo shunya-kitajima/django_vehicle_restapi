@@ -40,4 +40,13 @@ class AuthorizedSegmentApiTests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)
 
+    def test_2_3_should_create_new_segment_successfully(self):
+        payload = {"segment_name": "K-Car"}
+        res = self.client.post(SEGMENTS_URL, payload)
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        exists = Segment.objects.filter(
+            segment_name=payload["segment_name"]
+        ).exists()
+        self.assertTrue(exists)
+
 
