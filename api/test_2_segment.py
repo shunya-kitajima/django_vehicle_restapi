@@ -49,4 +49,10 @@ class AuthorizedSegmentApiTests(TestCase):
         ).exists()
         self.assertTrue(exists)
 
+    def test_2_4_should_not_create_new_segment_with_invalid(self):
+        payload = {"segment_name": ""}
+        res = self.client.post(SEGMENTS_URL, payload)
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+
 
