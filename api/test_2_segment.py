@@ -32,4 +32,12 @@ class AuthorizedSegmentApiTests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)
 
+    def test_2_2_should_get_single_segment(self):
+        segment = create_segment(segment_name="SUV")
+        url = detail_url(segment.id)
+        res = self.client.get(url)
+        serializer = SegmentSerializer(segment)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data, serializer.data)
+
 
