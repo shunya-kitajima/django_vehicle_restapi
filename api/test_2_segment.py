@@ -6,7 +6,7 @@ from rest_framework import status
 from .models import Segment
 from .serializers import SegmentSerializer
 
-SEGMENTS_URL = "/api/segments"
+SEGMENTS_URL = "/api/segments/"
 
 
 def create_segment(segment_name):
