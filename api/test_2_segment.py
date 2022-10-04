@@ -60,6 +60,15 @@ class AuthorizedSegmentApiTests(TestCase):
         url = detail_url(segment.id)
         res = self.client.patch(url, payload)
         segment.refresh_from_db()
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(segment.segment_name, payload["segment_name"])
 
+    def test_2_6_should_update_segment(self):
+        segment = create_segment(segment_name="SUV")
+        payload = {"segment_name": "Compact SUV"}
+        url = detail_url(segment.id)
+        res = self.client.put(url, payload)
+        segment.refresh_from_db()
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(segment.segment_name, payload["segment_name"])
 
