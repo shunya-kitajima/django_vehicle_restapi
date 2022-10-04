@@ -54,5 +54,12 @@ class AuthorizedSegmentApiTests(TestCase):
         res = self.client.post(SEGMENTS_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
+    def test_2_5_should_partial_update_segment(self):
+        segment = create_segment(segment_name="SUV")
+        payload = {"segment_name": "Compact SUV"}
+        url = detail_url(segment.id)
+        res = self.client.patch(url, payload)
+        segment.refresh_from_db()
+        self.assertEqual(segment.segment_name, payload["segment_name"])
 
 
