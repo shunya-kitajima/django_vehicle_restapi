@@ -72,3 +72,13 @@ class AuthorizedSegmentApiTests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(segment.segment_name, payload["segment_name"])
 
+    def test_2_7_should_delete_segment(self):
+        segment = create_segment(segment_name="SUV")
+        self.assertEqual(1, Segment.objects.count())
+        url = detail_url(segment.id)
+        res = self.client.delete(url)
+        segment.refresh_from_db()
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(0, Segment.objects.count())
+
+
