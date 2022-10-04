@@ -77,8 +77,14 @@ class AuthorizedSegmentApiTests(TestCase):
         self.assertEqual(1, Segment.objects.count())
         url = detail_url(segment.id)
         res = self.client.delete(url)
-        segment.refresh_from_db()
-        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(0, Segment.objects.count())
 
 
+class UnAuthorizedSegmentApiTests(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+
+    def test_2_8_should_not_get_segments_when_unauthorized(self):
+        res = self.client.get(SEGMENTS_URL)
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
